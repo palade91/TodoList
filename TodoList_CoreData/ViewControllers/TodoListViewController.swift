@@ -28,6 +28,22 @@ class TodoListViewController: UIViewController {
     
     //
     fileprivate func setupView() {
+        // setup cell for tableview
+        tableView.register(UINib(nibName: "TodoItemCell", bundle: nil), forCellReuseIdentifier: "todo_item")
+        
+        // tableview hide empty rows
+        tableView.tableFooterView = UIView()
+        
+        // navigation bar title
+        self.title = "Todo List"
+        
+        // navigation bar right button
+        let addBarButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        addBarButton.tintColor = .black
+        navigationItem.rightBarButtonItem = addBarButton
+    }
+    
+    @objc func addTapped() {
         
     }
 
@@ -35,6 +51,7 @@ class TodoListViewController: UIViewController {
     fileprivate func getAllTodoItems() {
         do {
             items = try context.fetch(TodoItem.fetchRequest())
+            tableView.reloadData()
         } catch let error {
             print(error.localizedDescription)
         }
@@ -65,20 +82,13 @@ class TodoListViewController: UIViewController {
         }
     }
     
-    fileprivate func updateItem(item: TodoItem, newTitle: String? = nil, newDescription: String? = nil, newIsCompleted: Bool? = nil, newDate: Date? = nil) {
-        
+    fileprivate func updateItem(item: TodoItem, newTitle: String?, newDescription: String?, newDate: Date?) {
         if let title = newTitle {
             item.taskTitle = title
         }
-        
         if let description = newDescription {
             item.taskDescription = description
         }
-        
-        if let isCompleted = newIsCompleted {
-            item.isCompleted = isCompleted
-        }
-        
         if let date = newDate {
             item.taskDate = date
         }
@@ -92,6 +102,7 @@ class TodoListViewController: UIViewController {
 
 }
 
+// MARK: UITableViewDelegate, UITableViewDataSource
 extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
@@ -99,12 +110,37 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "todo_item", for: indexPath) as! TodoItemCell
-        
+        let item = items[indexPath.row]
+        cell.setupCellWith(item: item)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let item = items[indexPath.row]
+        let detailsVC = TodoItemDetailsVC(type: .edit, item: item)
+        detailsVC.delegate = self
+        navigationController?.present(detailsVC, animated: true)
+    }
+}
+
+// MARK: TodoItemDetailsDelegate
+extension TodoListViewController: TodoItemDetailsDelegate {
+    func didEditItem(item: TodoItem, title: String?, description: String?, date: Date?) {
+        updateItem(item: item, newTitle: title, newDescription: description, newDate: date)
+        tableView.reloadData()
     }
     
+    func didMarkAsComplete(item: TodoItem) {
+        item.isCompleted = true
+        tableView.reloadData()
+    }
+    
+    func didDelete(item: TodoItem) {
+        delete(item: item)
+        tableView.reloadData()
+    }
+    
+    func didAddItem(title: String, description: String, date: Date) {
+        saveNewTodoItem(title: title, description: description, date: date)
+    }
 }

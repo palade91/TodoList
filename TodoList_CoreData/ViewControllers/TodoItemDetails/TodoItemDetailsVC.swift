@@ -12,10 +12,19 @@ enum ViewControllerType {
     case edit
 }
 
+protocol TodoItemDetailsDelegate {
+    func didEditItem(item: TodoItem, title: String?, description: String?, date: Date?)
+    func didMarkAsComplete(item: TodoItem)
+    func didDelete(item: TodoItem)
+    func didAddItem(title: String, description: String, date: Date)
+}
+
 class TodoItemDetailsVC: UIViewController {
 
     let type: ViewControllerType
     let item: TodoItem?
+    
+    var delegate: TodoItemDetailsDelegate?
     
     /// Using TodoItemDetailsVC for creating and displaying the todo item
     /// - Parameters:
