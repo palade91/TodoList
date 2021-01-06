@@ -14,7 +14,12 @@ class TodoListViewController: UIViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    var items: [TodoItem] = []
+    var items: [TodoItem] = [] {
+        didSet {
+            items.sort()
+            tableView.reloadData()
+        }
+    }
     
     // MARK: Viewcontroller lifecycle
     override func viewWillAppear(_ animated: Bool) {
@@ -24,6 +29,8 @@ class TodoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        getAllTodoItems()
     }
     
     //
@@ -44,14 +51,15 @@ class TodoListViewController: UIViewController {
     }
     
     @objc func addTapped() {
-        
+        let detailsVC = TodoItemDetailsVC(type: .create)
+        detailsVC.delegate = self
+        self.present(detailsVC, animated: true)
     }
 
     // MARK: Coredata
     fileprivate func getAllTodoItems() {
         do {
             items = try context.fetch(TodoItem.fetchRequest())
-            tableView.reloadData()
         } catch let error {
             print(error.localizedDescription)
         }
@@ -117,10 +125,39 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
-        let detailsVC = TodoItemDetailsVC(type: .edit, item: item)
+        let detailsVC = TodoItemDetailsVC(type: .display, item: item)
         detailsVC.delegate = self
-        navigationController?.present(detailsVC, animated: true)
+        navigationController?.pushViewController(detailsVC, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let contextItem = UIContextualAction(style: .normal, title: "Leading & .normal") { (contextualAction, view, boolValue) in
+                print("Leading Action style .normal")
+            }
+            let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
+
+            return swipeActions
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let contextItem = UIContextualAction(style: .destructive, title: "Trailing & .destructive") { (contextualAction, view, boolValue) in
+                print("Trailing Action style .destructive")
+            }
+            let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
+
+            return swipeActions
+    }
+    
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            items.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        }
+//    }
 }
 
 // MARK: TodoItemDetailsDelegate

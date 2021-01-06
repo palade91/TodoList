@@ -10,6 +10,11 @@ import Foundation
 import CoreData
 
 @objc(TodoItem)
-public class TodoItem: NSManagedObject {
+public class TodoItem: NSManagedObject, Comparable {
+    
+    public static func < (lhs: TodoItem, rhs: TodoItem) -> Bool {
+        lhs.taskDate < rhs.taskDate
+    }
+    
 
 }

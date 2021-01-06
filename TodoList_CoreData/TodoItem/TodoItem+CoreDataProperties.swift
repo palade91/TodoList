@@ -16,9 +16,9 @@ extension TodoItem {
         return NSFetchRequest<TodoItem>(entityName: "TodoItem")
     }
 
-    @NSManaged public var taskTitle: String?
-    @NSManaged public var taskDescription: String?
-    @NSManaged public var taskDate: Date?
+    @NSManaged public var taskTitle: String
+    @NSManaged public var taskDescription: String
+    @NSManaged public var taskDate: Date
     @NSManaged public var isCompleted: Bool
 
 }
