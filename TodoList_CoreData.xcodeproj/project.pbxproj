@@ -16,6 +16,8 @@
 		997D9E6C25A5FED80031CE6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 997D9E6A25A5FED80031CE6D /* LaunchScreen.storyboard */; };
 		997D9E7725A5FED90031CE6D /* TodoList_CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997D9E7625A5FED90031CE6D /* TodoList_CoreDataTests.swift */; };
 		997D9E8225A5FED90031CE6D /* TodoList_CoreDataUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997D9E8125A5FED90031CE6D /* TodoList_CoreDataUITests.swift */; };
+		997D9E9725A600AA0031CE6D /* TodoItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997D9E9525A600AA0031CE6D /* TodoItem+CoreDataClass.swift */; };
+		997D9E9825A600AA0031CE6D /* TodoItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997D9E9625A600AA0031CE6D /* TodoItem+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		997D9E7D25A5FED90031CE6D /* TodoList_CoreDataUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodoList_CoreDataUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		997D9E8125A5FED90031CE6D /* TodoList_CoreDataUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoList_CoreDataUITests.swift; sourceTree = "<group>"; };
 		997D9E8325A5FEDA0031CE6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		997D9E9525A600AA0031CE6D /* TodoItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		997D9E9625A600AA0031CE6D /* TodoItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,7 @@
 		997D9E5B25A5FED60031CE6D /* TodoList_CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				997D9E9C25A600D80031CE6D /* TodoItem */,
 				997D9E5C25A5FED60031CE6D /* AppDelegate.swift */,
 				997D9E5E25A5FED60031CE6D /* SceneDelegate.swift */,
 				997D9E6025A5FED60031CE6D /* ViewController.swift */,
@@ -129,6 +134,15 @@
 				997D9E8325A5FEDA0031CE6D /* Info.plist */,
 			);
 			path = TodoList_CoreDataUITests;
+			sourceTree = "<group>";
+		};
+		997D9E9C25A600D80031CE6D /* TodoItem */ = {
+			isa = PBXGroup;
+			children = (
+				997D9E9525A600AA0031CE6D /* TodoItem+CoreDataClass.swift */,
+				997D9E9625A600AA0031CE6D /* TodoItem+CoreDataProperties.swift */,
+			);
+			path = TodoItem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +279,8 @@
 				997D9E5D25A5FED60031CE6D /* AppDelegate.swift in Sources */,
 				997D9E6725A5FED60031CE6D /* TodoList_CoreData.xcdatamodeld in Sources */,
 				997D9E5F25A5FED60031CE6D /* SceneDelegate.swift in Sources */,
+				997D9E9825A600AA0031CE6D /* TodoItem+CoreDataProperties.swift in Sources */,
+				997D9E9725A600AA0031CE6D /* TodoItem+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +459,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 556JYUKVPG;
 				INFOPLIST_FILE = TodoList_CoreData/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -450,7 +467,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.catalinpalade.TodoList-CoreData";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -462,6 +479,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 556JYUKVPG;
 				INFOPLIST_FILE = TodoList_CoreData/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -469,7 +487,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.catalinpalade.TodoList-CoreData";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
