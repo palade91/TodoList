@@ -13,13 +13,6 @@ enum ViewControllerType {
     case display
 }
 
-protocol TodoItemDetailsDelegate {
-    func didEditItem(item: TodoItem, title: String?, description: String?, date: Date?)
-    func didMarkAsComplete(item: TodoItem)
-    func didDelete(item: TodoItem)
-    func didAddItem(title: String, description: String, date: Date)
-}
-
 class TodoItemDetailsVC: UIViewController {
     
     // MARK: IBOutlets
@@ -41,9 +34,6 @@ class TodoItemDetailsVC: UIViewController {
     //
     var type: ViewControllerType
     let item: TodoItem?
-    
-    var delegate: TodoItemDetailsDelegate?
-    
     
     // using the same vc for creating, editing and display
     init(type: ViewControllerType, item: TodoItem? = nil) {
@@ -117,10 +107,10 @@ class TodoItemDetailsVC: UIViewController {
             }
         }
         if let item = item {
-            if item.isCompleted {
-                greenButton.isHidden = true
-            } else {
+            if !item.isCompleted || type == .edit {
                 greenButton.isHidden = false
+            } else {
+                greenButton.isHidden = true
             }
         }
     }
@@ -141,13 +131,25 @@ class TodoItemDetailsVC: UIViewController {
         
         switch type {
         case .create:
-            delegate?.didAddItem(title: createTitleField.text!, description: createDescriptionText.text!, date: datePicker.date)
+            
+            CoreDataManager.shared.saveNewTodoItem(title: createTitleField.text ?? "",
+                                                   description: createDescriptionText.text ?? "",
+                                                   date: datePicker.date)
+            
+            // refresh items in TodoListVC
+            let notification = NotificationCenter.default
+            notification.post(name: Notification.Name("refresh_items"), object: nil)
+            
             self.dismiss(animated: true)
         
         case .edit:
             guard let item = item else { return }
-            delegate?.didEditItem(item: item, title: createTitleField.text, description: createDescriptionText.text, date: datePicker.date)
             
+            CoreDataManager.shared.updateItem(item: item,
+                                              newTitle: createTitleField.text,
+                                              newDescription: createDescriptionText.text,
+                                              newDate: datePicker.date)
+            // update view
             displayTitleLabel.text = createTitleField.text
             displayDescriptionLabel.text = createTitleField.text
             displayDateLabel.text = item.taskDate.stringDate()
@@ -157,21 +159,24 @@ class TodoItemDetailsVC: UIViewController {
             
         case .display:
             guard let item = item else { return }
-            delegate?.didMarkAsComplete(item: item)
+            CoreDataManager.shared.markAsCompleted(item: item)
             navigationController?.popViewController(animated: true)
         }
     }
+    
     @IBAction func redTapped(_ sender: UIButton) {
         
         switch type {
         case .create:
             dismiss(animated: true)
+            
         case .edit:
             type = .display
             setupView()
+            
         case .display:
             guard let item = item else { return }
-            delegate?.didDelete(item: item)
+            CoreDataManager.shared.delete(item: item)
             navigationController?.popViewController(animated: true)
         }
     }
