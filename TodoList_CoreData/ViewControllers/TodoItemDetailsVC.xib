@@ -35,6 +35,9 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vpV-YI-i1M">
                             <rect key="frame" x="0.0" y="0.0" width="384" height="40"/>
                             <color key="backgroundColor" systemColor="systemGreenColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="WXM-IE-knk"/>
+                            </constraints>
                             <state key="normal" title="Mark as completed">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
@@ -45,6 +48,9 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nug-tE-dho">
                             <rect key="frame" x="0.0" y="50" width="384" height="40"/>
                             <color key="backgroundColor" systemColor="systemRedColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="sUn-Fl-CEH"/>
+                            </constraints>
                             <state key="normal" title="Delete">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
@@ -58,7 +64,6 @@
                         <constraint firstAttribute="trailing" secondItem="vpV-YI-i1M" secondAttribute="trailing" id="PXI-Xw-JJn"/>
                         <constraint firstItem="vpV-YI-i1M" firstAttribute="leading" secondItem="STT-Oq-kBW" secondAttribute="leading" id="Xqf-jM-QsB"/>
                         <constraint firstItem="nug-tE-dho" firstAttribute="leading" secondItem="STT-Oq-kBW" secondAttribute="leading" id="vGg-qD-xnG"/>
-                        <constraint firstAttribute="height" constant="90" id="y2t-kV-ELb"/>
                     </constraints>
                 </stackView>
                 <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="wUB-Ya-W0i">

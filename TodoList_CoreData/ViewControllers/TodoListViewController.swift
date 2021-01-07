@@ -138,29 +138,27 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let contextItem = UIContextualAction(style: .normal, title: "Leading & .normal") { (contextualAction, view, boolValue) in
-                print("Leading Action style .normal")
-            }
-            let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
+        let contextItem = UIContextualAction(style: .normal, title: "Mark as completed") { (contextualAction, view, boolValue) in
+            let item = self.items[indexPath.row]
+            self.updateItem(item: item, newTitle: nil, newDescription: nil, newDate: nil, isCompleted: true)
+            item.isCompleted = true
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
 
-            return swipeActions
+        return swipeActions
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let contextItem = UIContextualAction(style: .destructive, title: "Trailing & .destructive") { (contextualAction, view, boolValue) in
-                print("Trailing Action style .destructive")
-            }
-            let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
-
-            return swipeActions
+        let contextItem = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
+            self.delete(item: self.items[indexPath.row])
+            self.getAllTodoItems()
+//            self.items.remove(at: indexPath.row)
+//            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
+        return swipeActions
     }
-    
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            items.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        }
-//    }
 }
 
 // MARK: TodoItemDetailsDelegate

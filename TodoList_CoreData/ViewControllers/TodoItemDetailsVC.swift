@@ -73,14 +73,6 @@ class TodoItemDetailsVC: UIViewController {
         createDescriptionText.layer.borderWidth = 1
         createDescriptionText.layer.borderColor = UIColor.lightGray.cgColor
         createDescriptionText.layer.cornerRadius = 6
-        
-        if let item = item {
-            if item.isCompleted {
-                greenButton.isEnabled = false
-            } else {
-                greenButton.isEnabled = true
-            }
-        }
     }
 
     //
@@ -98,7 +90,7 @@ class TodoItemDetailsVC: UIViewController {
             greenButton.setTitle("Save", for: .normal)
             redButtonOutlet.setTitle("Dismiss", for: .normal)
             
-            if let item = item {
+            if let _ = item {
                 createTitleField.text = displayTitleLabel.text
                 createDescriptionText.text = displayDescriptionLabel.text
                 
@@ -130,6 +122,13 @@ class TodoItemDetailsVC: UIViewController {
                 formatter.dateFormat = "MMM d, h:mm a"
                 formatter.locale = .current
                 displayDateLabel.text = formatter.string(from: item.taskDate)
+            }
+        }
+        if let item = item {
+            if item.isCompleted {
+                greenButton.isHidden = true
+            } else {
+                greenButton.isHidden = false
             }
         }
     }
