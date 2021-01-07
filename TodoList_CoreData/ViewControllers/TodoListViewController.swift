@@ -144,6 +144,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
             item.isCompleted = true
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
+        contextItem.backgroundColor = UIColor.green
         let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
         return swipeActions
     }
