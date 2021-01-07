@@ -30,11 +30,7 @@ class TodoItemCell: UITableViewCell {
         
         titleLabel.text = item.taskTitle
         descriptionLabel.text = item.taskDescription
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, h:mm a"
-        formatter.locale = .current
-        dateLabel.text = formatter.string(from: item.taskDate)
+        dateLabel.text = item.taskDate.stringDate()
         
         if item.isCompleted {
             checkMarkImage.tintColor = .green

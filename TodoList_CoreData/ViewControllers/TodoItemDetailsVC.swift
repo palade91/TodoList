@@ -93,11 +93,7 @@ class TodoItemDetailsVC: UIViewController {
             if let _ = item {
                 createTitleField.text = displayTitleLabel.text
                 createDescriptionText.text = displayDescriptionLabel.text
-                
-                let formatter = DateFormatter()
-                formatter.dateFormat = "MMM d, h:mm a"
-                formatter.locale = .current
-                if let date = formatter.date(from: displayDateLabel.text!) {
+                if let date = displayDateLabel.text?.date() {
                     datePicker.date = date
                 }
             }
@@ -117,11 +113,7 @@ class TodoItemDetailsVC: UIViewController {
             if let item = item {
                 displayTitleLabel.text = item.taskTitle
                 displayDescriptionLabel.text = item.taskDescription
-                
-                let formatter = DateFormatter()
-                formatter.dateFormat = "MMM d, h:mm a"
-                formatter.locale = .current
-                displayDateLabel.text = formatter.string(from: item.taskDate)
+                displayDateLabel.text = item.taskDate.stringDate()
             }
         }
         if let item = item {
@@ -158,11 +150,7 @@ class TodoItemDetailsVC: UIViewController {
             
             displayTitleLabel.text = createTitleField.text
             displayDescriptionLabel.text = createTitleField.text
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MMM d, h:mm a"
-            formatter.locale = .current
-            displayDateLabel.text = formatter.string(from: item.taskDate)
+            displayDateLabel.text = item.taskDate.stringDate()
             
             type = .display
             setupView()
