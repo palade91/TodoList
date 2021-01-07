@@ -60,8 +60,8 @@ class TodoListViewController: UIViewController {
     fileprivate func getAllTodoItems() {
         do {
             items = try context.fetch(TodoItem.fetchRequest())
-        } catch let error {
-            print(error.localizedDescription)
+        } catch {
+            UIAlertController.presentAlertOK(view: self, title: "Warning", message: "Error when trying to get all todo items. Please try again.")
         }
     }
     
@@ -75,8 +75,8 @@ class TodoListViewController: UIViewController {
         
         do {
             try context.save()
-        } catch let error {
-            print(error.localizedDescription)
+        } catch {
+            UIAlertController.presentAlertOK(view: self, title: "Warning", message: "Error when trying to create the todo item. Please try again.")
         }
     }
     
@@ -85,8 +85,8 @@ class TodoListViewController: UIViewController {
         
         do {
             try context.save()
-        } catch let error {
-            print(error.localizedDescription)
+        } catch {
+            UIAlertController.presentAlertOK(view: self, title: "Warning", message: "Error when trying to delete the todo item. Please try again.")
         }
     }
     
@@ -106,8 +106,8 @@ class TodoListViewController: UIViewController {
         
         do {
             try context.save()
-        } catch let error {
-            print(error.localizedDescription)
+        } catch {
+            UIAlertController.presentAlertOK(view: self, title: "Warning", message: "Error when trying to update the todo item. Please try again.")
         }
     }
 
@@ -145,7 +145,6 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
-
         return swipeActions
     }
     
@@ -153,8 +152,6 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
         let contextItem = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
             self.delete(item: self.items[indexPath.row])
             self.getAllTodoItems()
-//            self.items.remove(at: indexPath.row)
-//            self.tableView.deleteRows(at: [indexPath], with: .fade)
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
         return swipeActions
