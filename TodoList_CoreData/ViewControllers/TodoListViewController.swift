@@ -65,7 +65,7 @@ class TodoListViewController: UIViewController {
         }
     }
     
-    fileprivate func saveNewTodoItem(title: String, description: String, date: Date) {
+    fileprivate func saveNewTodoItem(view: UIViewController, title: String, description: String, date: Date) {
         let newTodoItem = TodoItem(context: context)
         
         newTodoItem.taskTitle = title
@@ -76,11 +76,11 @@ class TodoListViewController: UIViewController {
         do {
             try context.save()
         } catch {
-            UIAlertController.presentAlertOK(view: self, title: "Warning", message: "Error when trying to create the todo item. Please try again.")
+            UIAlertController.presentAlertOK(view: view, title: "Warning", message: "Error when trying to create the todo item. Please try again.")
         }
     }
     
-    fileprivate func delete(item: TodoItem) {
+    fileprivate func delete(item: TodoItem, view: UIViewController) {
         context.delete(item)
         
         do {
@@ -90,7 +90,7 @@ class TodoListViewController: UIViewController {
         }
     }
     
-    fileprivate func updateItem(item: TodoItem, newTitle: String?, newDescription: String?, newDate: Date?, isCompleted: Bool?) {
+    fileprivate func updateItem(item: TodoItem, view: UIViewController, newTitle: String?, newDescription: String?, newDate: Date?, isCompleted: Bool?) {
         if let title = newTitle {
             item.taskTitle = title
         }
@@ -140,7 +140,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let contextItem = UIContextualAction(style: .normal, title: "Mark as completed") { (contextualAction, view, boolValue) in
             let item = self.items[indexPath.row]
-            self.updateItem(item: item, newTitle: nil, newDescription: nil, newDate: nil, isCompleted: true)
+            self.updateItem(item: item, view: self, newTitle: nil, newDescription: nil, newDate: nil, isCompleted: true)
             item.isCompleted = true
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
@@ -150,7 +150,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let contextItem = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
-            self.delete(item: self.items[indexPath.row])
+            self.delete(item: self.items[indexPath.row], view: self)
             self.getAllTodoItems()
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
@@ -161,23 +161,23 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: TodoItemDetailsDelegate
 extension TodoListViewController: TodoItemDetailsDelegate {
     func didEditItem(item: TodoItem, title: String?, description: String?, date: Date?) {
-        updateItem(item: item, newTitle: title, newDescription: description, newDate: date, isCompleted: nil)
+        updateItem(item: item, view: self, newTitle: title, newDescription: description, newDate: date, isCompleted: nil)
         tableView.reloadData()
     }
     
     func didMarkAsComplete(item: TodoItem) {
         item.isCompleted = true
-        updateItem(item: item, newTitle: item.taskTitle, newDescription: item.description, newDate: item.taskDate, isCompleted: true)
+        updateItem(item: item, view: self, newTitle: item.taskTitle, newDescription: item.description, newDate: item.taskDate, isCompleted: true)
         tableView.reloadData()
     }
     
     func didDelete(item: TodoItem) {
-        delete(item: item)
+        delete(item: item, view: self)
         getAllTodoItems()
     }
     
     func didAddItem(title: String, description: String, date: Date) {
-        saveNewTodoItem(title: title, description: description, date: date)
+        saveNewTodoItem(view: self, title: title, description: description, date: date)
         getAllTodoItems()
     }
 }
