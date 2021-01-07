@@ -37,6 +37,7 @@ class TodoListViewController: UIViewController {
     fileprivate func setupView() {
         // setup cell for tableview
         tableView.register(UINib(nibName: "TodoItemCell", bundle: nil), forCellReuseIdentifier: "todo_item")
+        tableView.rowHeight = 100
         
         // tableview hide empty rows
         tableView.tableFooterView = UIView()
@@ -46,7 +47,6 @@ class TodoListViewController: UIViewController {
         
         // navigation bar right button
         let addBarButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        addBarButton.tintColor = .black
         navigationItem.rightBarButtonItem = addBarButton
     }
     
@@ -90,7 +90,7 @@ class TodoListViewController: UIViewController {
         }
     }
     
-    fileprivate func updateItem(item: TodoItem, newTitle: String?, newDescription: String?, newDate: Date?) {
+    fileprivate func updateItem(item: TodoItem, newTitle: String?, newDescription: String?, newDate: Date?, isCompleted: Bool?) {
         if let title = newTitle {
             item.taskTitle = title
         }
@@ -99,6 +99,9 @@ class TodoListViewController: UIViewController {
         }
         if let date = newDate {
             item.taskDate = date
+        }
+        if let isCompleted = isCompleted {
+            item.isCompleted = isCompleted
         }
         
         do {
@@ -163,21 +166,23 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: TodoItemDetailsDelegate
 extension TodoListViewController: TodoItemDetailsDelegate {
     func didEditItem(item: TodoItem, title: String?, description: String?, date: Date?) {
-        updateItem(item: item, newTitle: title, newDescription: description, newDate: date)
+        updateItem(item: item, newTitle: title, newDescription: description, newDate: date, isCompleted: nil)
         tableView.reloadData()
     }
     
     func didMarkAsComplete(item: TodoItem) {
         item.isCompleted = true
+        updateItem(item: item, newTitle: item.taskTitle, newDescription: item.description, newDate: item.taskDate, isCompleted: true)
         tableView.reloadData()
     }
     
     func didDelete(item: TodoItem) {
         delete(item: item)
-        tableView.reloadData()
+        getAllTodoItems()
     }
     
     func didAddItem(title: String, description: String, date: Date) {
         saveNewTodoItem(title: title, description: description, date: date)
+        getAllTodoItems()
     }
 }
