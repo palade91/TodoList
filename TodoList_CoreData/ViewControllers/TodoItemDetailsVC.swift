@@ -141,7 +141,7 @@ class TodoItemDetailsVC: UIViewController {
         
         switch type {
         case .create:
-            delegate?.didAddItem(title: createTitleField.text ?? "", description: createDescriptionText.text ?? "", date: datePicker.date)
+            delegate?.didAddItem(title: createTitleField.text!, description: createDescriptionText.text!, date: datePicker.date)
             self.dismiss(animated: true)
         
         case .edit:
