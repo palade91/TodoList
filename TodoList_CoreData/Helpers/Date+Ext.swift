@@ -8,6 +8,7 @@
 import Foundation
 
 extension Date {
+    // Date to String
     func stringDate() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d, h:mm a"

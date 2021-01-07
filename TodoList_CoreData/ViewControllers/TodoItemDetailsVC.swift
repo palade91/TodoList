@@ -70,7 +70,7 @@ class TodoItemDetailsVC: UIViewController {
         greenButton.layer.cornerRadius = 10
         redButtonOutlet.layer.cornerRadius = 10
         
-        createDescriptionText.layer.borderWidth = 1
+        createDescriptionText.layer.borderWidth = 0.7
         createDescriptionText.layer.borderColor = UIColor.lightGray.cgColor
         createDescriptionText.layer.cornerRadius = 6
     }

@@ -9,6 +9,7 @@ import UIKit
 
 class TodoItemCell: UITableViewCell {
     
+    // IBOutlets
     @IBOutlet weak var checkMarkImage: UIImageView!
     
     @IBOutlet weak var titleLabel: UILabel!
