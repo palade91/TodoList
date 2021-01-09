@@ -1,9 +1,9 @@
-## TodoList
+### TodoList
 
-### iOS Project with Swift and Storyboard
-### CoreData
+Simple Todo List app, with ability to create, update, delete and complete task.
+Using CoreData for persistent data.
 
-#### DarkMode
+##### DarkMode
 
 ![Simulator Screen Shot - iPhone 12 - 2021-01-07 at 17 51 15](https://user-images.githubusercontent.com/33358869/103926856-6c684a00-5111-11eb-9850-a8d66a3675e1.png)
 ![Simulator Screen Shot - iPhone 12 - 2021-01-07 at 17 51 20](https://user-images.githubusercontent.com/33358869/103926861-6e320d80-5111-11eb-9ee9-441e633d5288.png)
@@ -13,7 +13,7 @@
 ![Simulator Screen Shot - iPhone 12 - 2021-01-07 at 17 51 42](https://user-images.githubusercontent.com/33358869/103926886-74c08500-5111-11eb-8226-5f7675522ee9.png)
 
 
-#### LightMode
+##### LightMode
 
 ![Simulator Screen Shot - iPhone 12 - 2021-01-07 at 17 51 54](https://user-images.githubusercontent.com/33358869/103927052-afc2b880-5111-11eb-87c7-2d9749f60e9f.png)
 ![Simulator Screen Shot - iPhone 12 - 2021-01-07 at 17 51 58](https://user-images.githubusercontent.com/33358869/103927058-b2251280-5111-11eb-9c67-92ddd778899c.png)
